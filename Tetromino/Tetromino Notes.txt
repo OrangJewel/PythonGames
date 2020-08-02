@@ -1,0 +1,36 @@
+Tetromino Notes
+
+List of functions
+
+	def main():
+		The start, the first function run
+		Define global constants that are initialized after pygame.init()
+
+	def runGame():
+		The game loop
+		Largest function
+		Gets a new piece if there is no piece
+
+	def makeTextObjs(text, font, color):
+		
+	def terminate():
+	def checkForKeyPress():
+	def showTextScreen(text):
+	def checkForQuit():
+		Checks for quit
+
+	def calculateLevelAndFallFreq(score):
+	def getNewPiece():
+	def addToBoard(board, piece):
+	def getBlankBoard():
+	def isOnBoard(x, y):
+	def isValidPosition(board, piece, adjX=0, adjY=0):
+	def isCompleteLine(board, y):
+	def removeCompleteLines(board):
+	def convertToPixelCoords(boxx, boxy):
+	def drawBox(boxx, boxy, color, pixelx=None, pixely=None):
+	def drawBoard(board):
+	def drawStatus(score, level):
+	def drawPiece(piece, pixelx=None, pixely=None):
+	def drawNextPiece(piece):
+
