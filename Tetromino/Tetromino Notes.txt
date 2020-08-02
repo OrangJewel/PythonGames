@@ -34,3 +34,21 @@ List of functions
 	def drawPiece(piece, pixelx=None, pixely=None):
 	def drawNextPiece(piece):
 
+Shapes is a Dictionary
+
+	Initialized
+	SHAPES = {'S': S_SHAPE_TEMPLATE,
+		  'Z': Z_SHAPE_TEMPLATE,
+		  ...
+
+	Usage
+	SHAPES['S']
+
+Colors is a list
+
+	Initialized
+	COLORS = (GREEN, RED, ... )
+
+	Usage
+	COLORS[2]
+

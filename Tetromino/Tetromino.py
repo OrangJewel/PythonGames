@@ -3,6 +3,7 @@
 # http://inventwithpython.com/pygame
 # Creative Commons BY-NC-SA 3.0 US
 
+from __future__ import print_function
 import random, time, pygame, sys
 from pygame.locals import *
 
@@ -20,26 +21,25 @@ MOVEDOWNFREQ = 0.1
 XMARGIN = int((WINDOWWIDTH - BOARDWIDTH * BOXSIZE) / 2)
 TOPMARGIN = WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE) - 5
 
-#               R    G    B
-WHITE       = (255, 255, 255)
-GRAY        = (185, 185, 185)
-BLACK       = (  0,   0,   0)
-RED         = (155,   0,   0)
-LIGHTRED    = (175,  20,  20)
-GREEN       = (  0, 155,   0)
-LIGHTGREEN  = ( 20, 175,  20)
-BLUE        = (  0,   0, 155)
-LIGHTBLUE   = ( 20,  20, 175)
-YELLOW      = (155, 155,   0)
-LIGHTYELLOW = (175, 175,  20)
+#          R    G    B
+WHITE  = (255, 255, 255)
+GRAY   = (185, 185, 185)
+BLACK  = (  0,   0,   0)
+RED    = (255,   0,   0)
+GREEN  = (  0, 255,   0)
+BLUE   = (  0,   0, 255)
+YELLOW = (155, 155,   0)
+ORANGE = (255, 128,   0)
+TEAL   = (255, 255,   0)
+PURPLE = (153,  51, 255)
+print(*WHITE)
 
-BORDERCOLOR = BLUE
+BORDERCOLOR = WHITE
 BGCOLOR = BLACK
 TEXTCOLOR = WHITE
 TEXTSHADOWCOLOR = GRAY
-COLORS      = (     BLUE,      GREEN,      RED,      YELLOW)
-LIGHTCOLORS = (LIGHTBLUE, LIGHTGREEN, LIGHTRED, LIGHTYELLOW)
-assert len(COLORS) == len(LIGHTCOLORS)
+COLORS = (GREEN, RED, TEAL, YELLOW, BLUE, ORANGE, PURPLE)
+assert len(COLORS)
 
 TEMPLATEWIDTH = 5
 TEMPLATEHEIGHT = 5
@@ -153,6 +153,8 @@ SHAPES = {'S': S_SHAPE_TEMPLATE,
           'I': I_SHAPE_TEMPLATE,
           'O': O_SHAPE_TEMPLATE,
           'T': T_SHAPE_TEMPLATE}
+
+
 # good
 
 def main():
@@ -365,19 +367,26 @@ def checkForQuit():
 
 def calculateLevelAndFallFreq(score):
 
-
     level = int(score / 10) + 1
     fallFreq = 0.27 - (level * 0.02)
     return level, fallFreq
 
 def getNewPiece():
 
-    shape = random.choice(list(SHAPES.keys()))
-    newPiece = {'shape': shape,
-                'rotation': random.randint(0, len(SHAPES[shape]) - 1),
+#    shapeLetter = random.choice(list(SHAPES.keys()))
+    shapeKeyList = list(SHAPES.keys())
+    shapePosition = random.randint(0, len(shapeKeyList) - 1)
+    shapeLetter = shapeKeyList[shapePosition]
+    colorPosition = shapePosition
+    print('The shape position is %s' % shapePosition)
+#    print('Shape has quick-droped %s rows' % (i - 1))
+
+    newPiece = {'shape': shapeLetter,
+                'rotation': random.randint(0, len(SHAPES[shapeLetter]) - 1),
                 'x': int(BOARDWIDTH / 2) - int(TEMPLATEWIDTH / 2),
                 'y': -2,
-                'color': random.randint(0, len(COLORS)-1)}
+                'color': colorPosition}
+
     return newPiece
 
 
@@ -452,15 +461,12 @@ def convertToPixelCoords(boxx, boxy):
 
 def drawBox(boxx, boxy, color, pixelx=None, pixely=None):
 
-
-
-
     if color == BLANK:
         return
     if pixelx == None and  pixely == None:
         pixelx, pixely = convertToPixelCoords(boxx, boxy)
+        
     pygame.draw.rect(DISPLAYSURF, COLORS[color], (pixelx + 1, pixely + 1, BOXSIZE - 1, BOXSIZE - 1))
-    pygame.draw.rect(DISPLAYSURF, LIGHTCOLORS[color], (pixelx  + 1, pixely + 1, BOXSIZE - 4, BOXSIZE - 4))
 
 
 def drawBoard(board):
@@ -490,11 +496,11 @@ def drawStatus(score, level):
 
 
 def drawPiece(piece, pixelx=None, pixely=None):
+    
     shapeToDraw = SHAPES[piece['shape']][piece['rotation']]
     if pixelx == None and pixely == None:
 
         pixelx, pixely = convertToPixelCoords(piece['x'], piece['y'])
-
 
     for x in range(TEMPLATEWIDTH):
         for y in range(TEMPLATEHEIGHT):
