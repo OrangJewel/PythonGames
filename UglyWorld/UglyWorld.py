@@ -20,18 +20,24 @@ keyRectObj.center = (200, 250)
 
 displayText = False
 
+
 while True:
     DISPLAYSURF.fill(WHITE)
     DISPLAYSURF.blit(textSurfaceObj, textRectObj)
     
-    if displayText == True:
+#    if displayText == True:
+#        DISPLAYSURF.blit(keySurfaceObj, keyRectObj)
+#        print('blit')
+
+    if pygame.key.get_pressed()[pygame.K_a]:
+        print('The a key is being held')
         DISPLAYSURF.blit(keySurfaceObj, keyRectObj)
-    
+
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == KEYUP:
+        elif event.type == KEYDOWN:
             if event.key == K_a:
                 print ('The a key has been pressed')
                 displayText = True
