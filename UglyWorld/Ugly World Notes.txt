@@ -1,0 +1,43 @@
+Bitmap / Images
+
+3x3 = 9 pixels
+
+black and white, 2 choices (1 bit), total 9 bits
+|------
+|0|1|0|
+|------
+|1|1|1|
+|------
+|0|1|0|
+|------
+
+black, white, green, red 4 choices (2 bit), total 18 bits
+|------
+|0|1|0|
+|------
+|2|2|2|
+|------
+|0|3|0|
+|------
+
+black, white, red, green, blue, etc. (8 bit), total of 72 bits, 9 bytes
+|------
+|0|1|0|
+|------
+|5|6|7|
+|------
+|0|8|0|
+|------
+
+8 bit color, 100x100 image = 10,000 bytes, or 10K
+
+Monitor: 24 bit color (3 bytes) 1920x1080 (or simplified to 2000x1000) = 2,000,000 x 3 = 6,000,000 or 6MB
+
+Video
+6MB x 20fps = 120MB/s
+120MB x 60s = 7200MB/m or 7.2GB/m
+7.2GB x 60m = 420GB/h
+
+Wyatt Earp
+420GB x 3h = 1260GB or 1.2TB
+
