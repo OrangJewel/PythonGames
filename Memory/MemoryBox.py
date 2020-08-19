@@ -84,7 +84,6 @@ def main():
             if not revealedBoxes[boxx][boxy]:
                 drawHighlightBox(boxx, boxy)
             if not revealedBoxes[boxx][boxy] and mouseClicked:
-                revealBoxesAnimation(mainBoard, [(boxx, boxy)])
                 revealedBoxes[boxx][boxy] = True
                 if firstSelection == None:
                     firstSelection = (boxx, boxy)
@@ -95,8 +94,7 @@ def main():
 
                     if icon1shape != icon2shape or icon1color != icon2color:
 
-                        pygame.time.wait(1000)
-                        coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (boxx, boxy)])
+
                         revealedBoxes[firstSelection[0]][firstSelection [1]] = False
                         revealedBoxes[boxx][boxy] = False
 
@@ -202,19 +200,6 @@ def drawBoxCovers(board, boxes, coverage):
             pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, coverage, BOXSIZE))
     pygame.display.update()
     FPSCLOCK.tick(FPS)
-
-
-def revealBoxesAnimation(board, boxesToReveal):
-
-    for coverage in range(BOXSIZE, (-REVEALSPEED) - 1, -REVEALSPEED):
-        drawBoxCovers(board, boxesToReveal, coverage)
-
-
-def coverBoxesAnimation(board, boxesToCover):
-
-    for coverage in range(0, BOXSIZE + REVEALSPEED, REVEALSPEED):
-        drawBoxCovers(board, boxesToCover, coverage)
-
 
 def drawBoard(board, revealed):
 
