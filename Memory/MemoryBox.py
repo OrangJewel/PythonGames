@@ -61,7 +61,6 @@ def main():
     firstSelection = None
 
     DISPLAYSURF.fill(BGCOLOR)
-    startGameAnimation(mainBoard)
 
     while True:
         mouseClicked = False
@@ -100,21 +99,7 @@ def main():
                         coverBoxesAnimation(mainBoard, [(firstSelection[0], firstSelection[1]), (boxx, boxy)])
                         revealedBoxes[firstSelection[0]][firstSelection [1]] = False
                         revealedBoxes[boxx][boxy] = False
-                    elif hasWon(revealedBoxes):
-                        gameWonAnimation(mainBoard)
-                        pygame.time.wait(2000)
 
-
-                        mainBoard = getRandomizedBoard()
-                        revealedBoxes = generateRevealedBoxesData(False)
-
-
-                        drawBoard(mainBoard, revealedBoxes)
-                        pygame.display.update()
-                        pygame.time.wait(1000)
-
-
-                        startGameAnimation(mainBoard)
                     firstSelection = None
 
 
@@ -250,42 +235,7 @@ def drawHighlightBox(boxx, boxy):
     pygame.draw.rect(DISPLAYSURF, HIGHLIGHTCOLOR, (left - 5, top - 5, BOXSIZE + 10, BOXSIZE + 10), 4)
 
 
-def startGameAnimation(board):
 
-    coveredBoxes = generateRevealedBoxesData(False)
-    boxes = []
-    for x in range(BOARDWIDTH):
-        for y in range(BOARDHEIGHT):
-            boxes.append( (x, y) )
-    random.shuffle(boxes)
-    boxGroups = splitIntoGroupsOf(8, boxes)
-
-    drawBoard(board, coveredBoxes)
-    for boxGroup in boxGroups:
-        revealBoxesAnimation(board, boxGroup)
-        coverBoxesAnimation(board, boxGroup)
-
-
-def gameWonAnimation(board):
-
-    coveredBoxes = generateRevealedBoxesData(True)
-    color1 = LIGHTBGCOLOR
-    color2 = BGCOLOR
-
-    for i in range(13):
-        color1, color2 = color2, color1
-        DISPLAYSURF.fill(color1)
-        drawBoard(board, coveredBoxes)
-        pygame.display.update()
-        pygame.time.wait(300)
-
-
-def hasWon(revealedBoxes):
-
-    for i in revealedBoxes:
-        if False in i:
-            return False
-    return True
 
 
 if __name__ == '__main__':
