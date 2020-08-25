@@ -53,7 +53,7 @@ def main():
 
     mousex = 0
     mousey = 0
-    pygame.display.set_caption('Memory Game')
+##    pygame.display.set_caption('Memory Game')
 
     mainBoard = getRandomizedBoard()
     revealedBoxes = generateRevealedBoxesData(False)
@@ -131,7 +131,9 @@ def getRandomizedBoard():
         for y in range(BOARDHEIGHT):
             column.append(icons[0])
             del icons[0]
+
         board.append(column)
+        
     return board
 
 

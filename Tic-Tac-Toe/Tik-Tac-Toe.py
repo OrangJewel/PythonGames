@@ -6,7 +6,8 @@ WINDOWWIDTH = 600
 WINDOWHEIGHT = 600
 DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 
-
+mousex = 0
+mousey = 0
 
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
@@ -60,6 +61,139 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == MOUSEMOTION:
+            mousex, mousey = event.pos
+        elif event.type == MOUSEBUTTONUP:
+            mousex, mousey = event.pos
+            mouseClicked = True
+            if mousex in range(0, 200):
+                if mousey in range(0, 200):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (100, 100), 80, 5)
+                        turn = False
+                        space_7 = False
+                        space_7a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 25), (175, 175), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 175), (175, 25), 5)
+                        turn = True
+                        space_7 = False
+                        space_7b = True
+                        
+            if mousex in range(201, 400):
+                if mousey in range(0, 200):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (300, 100), 80, 5)
+                        turn = False
+                        space_8 = False
+                        space_8a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 25), (375, 175), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 175), (375, 25), 5)
+                        turn = True
+                        space_8 = False
+                        space_8b = True
+                    
+            if mousex in range(401, 600):
+                if mousey in range(0, 200):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (500, 100), 80, 5)
+                        turn = False
+                        space_9 = False
+                        space_9a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 25), (575, 175), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 175), (575, 25), 5)
+                        turn = True
+                        space_9 = False
+                        space_9b = True
+
+            if mousex in range(0, 200):
+                if mousey in range(201, 400):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (100, 300), 80, 5)
+                        turn = False
+                        space_4 = False
+                        space_4a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 225), (175, 375), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 375), (175, 225), 5)
+                        turn = True
+                        space_4 = False
+                        space_4b = True
+
+            if mousex in range(201, 400):
+                if mousey in range(201, 400):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (300, 300), 80, 5)
+                        turn = False
+                        space_5 = False
+                        space_5a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 225), (375, 375), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 375), (375, 225), 5)
+                        turn = True
+                        space_5 = False
+                        space_5b = True
+
+            if mousex in range(401, 600):
+                if mousey in range(201, 400):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (500, 300), 80, 5)
+                        turn = False
+                        space_6 = False
+                        space_6a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 225), (575, 375), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 375), (575, 225), 5)
+                        turn = True
+                        space_6 = False
+                        space_6b = True
+
+            if mousex in range(0, 200):
+                if mousey in range(401, 600):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (100, 500), 80, 5)
+                        turn = False
+                        space_1 = False
+                        space_1a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 425), (175, 575), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (25, 575), (175, 425), 5)
+                        turn = True
+                        space_1 = False
+                        space_1b = True
+
+            if mousex in range(201, 400):
+                if mousey in range(401, 600):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (300, 500), 80, 5)
+                        turn = False
+                        space_2 = False
+                        space_2a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 425), (375, 575), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (225, 575), (375, 425), 5)
+                        turn = True
+                        space_2 = False
+                        space_2b = True
+
+            if mousex in range(401, 600):
+                if mousey in range(401, 600):
+                    if turn == True:
+                        pygame.draw.circle(DISPLAYSURF, BLUE, (500, 500), 80, 5)
+                        turn = False
+                        space_3 = False
+                        space_3a = True
+                    else:
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 425), (575, 575), 5)
+                        pygame.draw.line(DISPLAYSURF, RED, (425, 575), (575, 425), 5)
+                        turn = True
+                        space_3 = False
+                        space_3b = True
+
+                    
+        
         elif event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 pygame.quit()
@@ -188,6 +322,8 @@ while True:
                     turn = True
                     space_3 = False
                     space_3b = True
+
+                    
         if space_7a == True and space_8a == True and space_9a == True:
             pygame.draw.line(DISPLAYSURF, GREEN, (25, 100), (575, 100), 7)
             if gameOver == False:
