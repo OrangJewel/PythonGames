@@ -7,11 +7,9 @@ import pygame, sys, random
 from pygame.locals import *
 
 
-BOARDWIDTH = 4
-BOARDHEIGHT = 4
-TILESIZE = 80
+BOARD = 4
 WINDOWWIDTH = 640
-WINDOWHEIGHT = 480
+WINDOWHEIGHT = 640
 FPS = 30
 BLANK = None
 
@@ -32,13 +30,14 @@ BUTTONCOLOR = WHITE
 BUTTONTEXTCOLOR = BLACK
 MESSAGECOLOR = WHITE
 
-XMARGIN = int((WINDOWWIDTH - (TILESIZE * BOARDWIDTH + (BOARDWIDTH - 1))) / 2)
-YMARGIN = int((WINDOWHEIGHT - (TILESIZE * BOARDHEIGHT + (BOARDHEIGHT - 1))) / 2)
+MARGIN = 100
 
 UP = 'up'
 DOWN = 'down'
 LEFT = 'left'
 RIGHT = 'right'
+
+TILESIZE = (WINDOWWIDTH - MARGIN - MARGIN) / BOARD
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, RESET_SURF, RESET_RECT, NEW_SURF, NEW_RECT, SOLVE_SURF, SOLVE_RECT
@@ -134,22 +133,22 @@ def getStartingBoard():
 
     counter = 1
     board = []
-    for x in range(BOARDWIDTH):
+    for x in range(BOARD):
         column = []
-        for y in range(BOARDHEIGHT):
+        for y in range(BOARD):
             column.append(counter)
-            counter += BOARDWIDTH
+            counter += BOARD
         board.append(column)
-        counter -= BOARDWIDTH * (BOARDHEIGHT - 1) + BOARDWIDTH - 1
+        counter -= BOARD * (BOARD - 1) + BOARD - 1
 
-    board[BOARDWIDTH-1][BOARDHEIGHT-1] = None
+    board[BOARD-1][BOARD-1] = None
     return board
 
 
 def getBlankPosition(board):
 
-    for x in range(BOARDWIDTH):
-        for y in range(BOARDHEIGHT):
+    for x in range(BOARD):
+        for y in range(BOARD):
             if board[x][y] == None:
                 return (x, y)
 
@@ -195,8 +194,8 @@ def getRandomMove(board, lastMove=None):
 
 
 def getLeftTopOfTile(tileX, tileY):
-    left = XMARGIN + (tileX * TILESIZE) + (tileX - 1)
-    top = YMARGIN + (tileY * TILESIZE) + (tileY - 1)
+    left = MARGIN + (tileX * TILESIZE) + (tileX - 1)
+    top = MARGIN + (tileY * TILESIZE) + (tileY - 1)
     return (left, top)
 
 
@@ -242,8 +241,8 @@ def drawBoard(board, message):
                 drawTile(tilex, tiley, board[tilex][tiley])
 
     left, top = getLeftTopOfTile(0, 0)
-    width = BOARDWIDTH * TILESIZE
-    height = BOARDHEIGHT * TILESIZE
+    width = BOARD * TILESIZE
+    height = BOARD * TILESIZE
     pygame.draw.rect(DISPLAYSURF, BORDERCOLOR, (left - 5, top - 5, width + 11, height + 11), 4)
 
     DISPLAYSURF.blit(RESET_SURF, RESET_RECT)
