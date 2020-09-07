@@ -12,7 +12,7 @@ WINHEIGHT = 480
 HALF_WINWIDTH = int(WINWIDTH / 2)
 HALF_WINHEIGHT = int(WINHEIGHT / 2)
 
-GRASSCOLOR = (24, 255, 0)
+GRASSCOLOR = (100, 255, 76)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
@@ -34,34 +34,11 @@ DIRCHANGEFREQ = 2
 LEFT = 'left'
 RIGHT = 'right'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TYPE_BROWN = 1
+TYPE_GREEN = 2
 
 def main():
-    global FPSCLOCK, DISPLAYSURF, BASICFONT, L_SQUIR_IMG, R_SQUIR_IMG, GRASSIMAGES
+    global FPSCLOCK, DISPLAYSURF, BASICFONT, GRASSIMAGES, L_SQUIR_IMG1, R_SQUIR_IMG1, L_SQUIR_IMG2, R_SQUIR_IMG2
 
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -70,13 +47,17 @@ def main():
     pygame.display.set_caption('Squirrel Eat Squirrel')
     BASICFONT = pygame.font.Font('freesansbold.ttf', 32)
 
-
-    L_SQUIR_IMG = pygame.image.load('squirrel.png')
-    R_SQUIR_IMG = pygame.transform.flip(L_SQUIR_IMG, True, False)
     GRASSIMAGES = []
     for i in range(1, 5):
         GRASSIMAGES.append(pygame.image.load('grass%s.png' % i))
+    
+    L_SQUIR_IMG1 = pygame.image.load('squirrel1.png')
+    R_SQUIR_IMG1 = pygame.transform.flip(L_SQUIR_IMG1, True, False)
+    
+    L_SQUIR_IMG2 = pygame.image.load('squirrel2.png')
+    R_SQUIR_IMG2 = pygame.transform.flip(L_SQUIR_IMG2, True, False)
 
+    
     while True:
         runGame()
 
@@ -102,6 +83,7 @@ def runGame():
     winRect2 = winSurf2.get_rect()
     winRect2.center = (HALF_WINWIDTH, HALF_WINHEIGHT + 30)
 
+    
 
     camerax = 0
     cameray = 0
@@ -109,7 +91,7 @@ def runGame():
     grassObjs = []
     squirrelObjs = []
 
-    playerObj = {'surface': pygame.transform.scale(L_SQUIR_IMG, (STARTSIZE, STARTSIZE)),
+    playerObj = {'surface': pygame.transform.scale(L_SQUIR_IMG1, (STARTSIZE, STARTSIZE)),
                  'facing': LEFT,
                  'size': STARTSIZE,
                  'x': HALF_WINWIDTH,
@@ -130,6 +112,8 @@ def runGame():
 
     while True:
 
+#        squirrelType = random.randint(1, 2)
+        
         if invulnerableMode and  time.time() - invulnerableStartTime > INVULNTIME:
             invulnerableMode = False
 
@@ -138,18 +122,30 @@ def runGame():
 
             sObj['x'] += sObj['movex']
             sObj['y'] += sObj['movey']
+            
             sObj['bounce'] += 1
             if sObj['bounce'] > sObj['bouncerate']:
                 sObj['bounce'] = 0
 
-
             if random.randint(0, 99) < DIRCHANGEFREQ:
                 sObj['movex'] = getRandomVelocity()
                 sObj['movey'] = getRandomVelocity()
-                if sObj['movex'] > 0:
-                    sObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (sObj['width'], sObj['height']))
+
+                if sObj['type'] == TYPE_GREEN:
+                    if sObj['movex'] > 0:
+                        sObj['surface'] = pygame.transform.scale(R_SQUIR_IMG2, (sObj['width'], sObj['height']))
+                        #print('one')
+                    else:
+                        sObj['surface'] = pygame.transform.scale(L_SQUIR_IMG2, (sObj['width'], sObj['height']))
+                        #print('two')
+
                 else:
-                    sObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (sObj['width'], sObj['height']))
+                    if sObj['movex'] > 0:
+                        sObj['surface'] = pygame.transform.scale(R_SQUIR_IMG1, (sObj['width'], sObj['height']))
+                        #print('three')
+                    else:
+                        sObj['surface'] = pygame.transform.scale(L_SQUIR_IMG1, (sObj['width'], sObj['height']))
+                        #print('four')
 
 
 
@@ -196,6 +192,7 @@ def runGame():
                                          sObj['y'] - cameray - getBounceAmount(sObj['bounce'], sObj['bouncerate'], sObj['bounceheight']),
                                          sObj['width'],
                                          sObj['height']) )
+            
             DISPLAYSURF.blit(sObj['surface'], sObj['rect'])
 
 
@@ -206,6 +203,7 @@ def runGame():
                                               playerObj['y'] - cameray - getBounceAmount(playerObj['bounce'], BOUNCERATE, BOUNCEHEIGHT),
                                               playerObj['size'],
                                               playerObj['size']) )
+            
             DISPLAYSURF.blit(playerObj['surface'], playerObj['rect'])
 
 
@@ -227,13 +225,13 @@ def runGame():
                     moveRight = False
                     moveLeft = True
                     if playerObj['facing'] == RIGHT:
-                        playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG1, (playerObj['size'], playerObj['size']))
                     playerObj['facing'] = LEFT
                 elif event.key in (K_RIGHT, K_d):
                     moveLeft = False
                     moveRight = True
                     if playerObj['facing'] == LEFT:
-                        playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                        playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG1, (playerObj['size'], playerObj['size']))
                     playerObj['facing'] = RIGHT
                 elif winMode and event.key == K_r:
                     return
@@ -281,9 +279,9 @@ def runGame():
                         del squirrelObjs[i]
 
                         if playerObj['facing'] == LEFT:
-                            playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                            playerObj['surface'] = pygame.transform.scale(L_SQUIR_IMG1, (playerObj['size'], playerObj['size']))
                         if playerObj['facing'] == RIGHT:
-                            playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG, (playerObj['size'], playerObj['size']))
+                            playerObj['surface'] = pygame.transform.scale(R_SQUIR_IMG1, (playerObj['size'], playerObj['size']))
 
                         if playerObj['size'] > WINSIZE:
                             winMode = True
@@ -354,7 +352,11 @@ def getRandomOffCameraPos(camerax, cameray, objWidth, objHeight):
 
 
 def makeNewSquirrel(camerax, cameray):
+
+    squirrelType = random.randint(1, 2)
+    
     sq = {}
+    sq['type'] = squirrelType
     generalSize = random.randint(5, 25)
     multiplier = random.randint(1, 3)
     sq['width'] = (generalSize + random.randint(0, 10)) * multiplier
@@ -363,13 +365,24 @@ def makeNewSquirrel(camerax, cameray):
     sq['movex'] = getRandomVelocity()
     sq['movey'] = getRandomVelocity()
     if sq['movex'] < 0:
-        sq['surface'] = pygame.transform.scale(L_SQUIR_IMG, (sq['width'], sq['height']))
+        sq['surface'] = pygame.transform.scale(L_SQUIR_IMG1, (sq['width'], sq['height']))
     else:
-        sq['surface'] = pygame.transform.scale(R_SQUIR_IMG, (sq['width'], sq['height']))
+        sq['surface'] = pygame.transform.scale(R_SQUIR_IMG1, (sq['width'], sq['height']))
     sq['bounce'] = 0
     sq['bouncerate'] = random.randint(10, 18)
     sq['bounceheight'] = random.randint(10, 50)
+
+    if squirrelType == TYPE_GREEN:
+        sq['width'] = (generalSize) * multiplier
+        sq['height'] = (generalSize) * multiplier
+        if sq['movex'] < 0:
+            sq['surface'] = pygame.transform.scale(L_SQUIR_IMG2, (sq['width'], sq['height']))
+        else:
+            sq['surface'] = pygame.transform.scale(R_SQUIR_IMG2, (sq['width'], sq['height']))
+        
     return sq
+
+   
 
 
 def makeNewGrass(camerax, cameray):
