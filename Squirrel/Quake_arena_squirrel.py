@@ -34,8 +34,8 @@ DIRCHANGEFREQ = 2
 LEFT = 'left'
 RIGHT = 'right'
 
-TYPE_BROWN = 1
-TYPE_GREEN = 2
+TYPE_BROWN = 'b'
+TYPE_GREEN = 'g'
 
 def main():
     global FPSCLOCK, DISPLAYSURF, BASICFONT, GRASSIMAGES, L_SQUIR_IMG1, R_SQUIR_IMG1, L_SQUIR_IMG2, R_SQUIR_IMG2
@@ -353,7 +353,8 @@ def getRandomOffCameraPos(camerax, cameray, objWidth, objHeight):
 
 def makeNewSquirrel(camerax, cameray):
 
-    squirrelType = random.randint(1, 2)
+    squirrelTypes = ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'g', 'g', 'g']
+    squirrelType = random.choice(squirrelTypes)
     
     sq = {}
     sq['type'] = squirrelType
