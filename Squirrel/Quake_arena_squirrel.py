@@ -272,9 +272,16 @@ def runGame():
                 sqObj = squirrelObjs[i]
                 if 'rect' in sqObj and playerObj['rect'].colliderect(sqObj['rect']):
 
+                    if sqObj['type'] == TYPE_GREEN:
+                        invulnerableMode = True
+                        invulnerableStartTime = time.time()
+
+                        del squirrelObjs[i]
+
 
                     if sqObj['width'] * sqObj['height'] <= playerObj['size']**2:
 
+                        
                         playerObj['size'] += int( (sqObj['width'] * sqObj['height'])**0.2 ) + 1
                         del squirrelObjs[i]
 
